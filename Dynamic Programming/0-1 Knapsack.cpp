@@ -1,5 +1,17 @@
 // wt and val are 1 based indexed vectors
-int knapSack(int W, vector<int> wt, vector<int> val, int n) {
+int knapsack_recursive(int W, vector<int> wt, vector<int> val, int n) {
+    if (!W or !n)
+        return 0;
+
+    if (wt[n] <= W) {
+        return max(val[n] + knapsack_recursive(W - wt[n], wt, val, n - 1),
+                   knapsack_recursive(W, wt, val, n - 1));
+    } else {
+        return knapsack_recursive(W, wt, val, n - 1);
+    }
+}
+
+int knapsack_dp(int W, vector<int> wt, vector<int> val) {
     int n = wt.size();
     vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
 
